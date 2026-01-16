@@ -25,11 +25,12 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/rooms", roomRoutes);
 
-// MongoDB Connection
+// MongoDB Connection   .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/chat-app")
+console.log(process.env.MONGODB_URI);
 mongoose
   .connect(
     process.env.MONGODB_URI ||
-      "mongodb://root:root@localhost:27017/chat-app?authSource=admin"
+      "mongodb://root:root@mongo:27017/chat-app?authSource=admin"
   )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));

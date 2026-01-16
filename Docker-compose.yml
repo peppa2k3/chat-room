@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  backend:
+    image: chatroombackend:1.1
+    container_name: backend
+    restart: always
+    ports:
+      - "5000:5000"
+    networks:
+      - web
+    environment:
+      MONGODB_URI: mongodb://admin1:pass1@mongo:27017/chatapp?authSource=admin
+      CORS_ORIGIN: http://localhost:5173
+  frontend:
+    image: chatroomfe:1.0
+    container_name: frontend
+    restart: always
+    ports:
+      - "5173:80"
+    networks:
+      - web
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    networks:
+      - web
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin1
+      - MONGO_INITDB_ROOT_PASSWORD=pass1
+networks:
+  web:
+    external: true
